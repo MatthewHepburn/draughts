@@ -3,7 +3,14 @@
 <?php
 $servername = "localhost";
 $username = "draughts";
-$password = $argv[1]; // Password for draughts account must be first arguement to script
+
+if (array_key_exists(1, $argv)) {
+    $password = $argv[1]; // Password for draughts account must be first arguement to script
+} else {
+    die("Error: the password for username '{$username}' must be the first arguement when invoking this script.\n");
+}
+
+
 $dbname = "draughts";
 
 // Create connection
@@ -19,8 +26,9 @@ CREATE TABLE players (
     username VARCHAR(50) NOT NULL,
     created TIMESTAMP,
     last_seen TIMESTAMP,
-    password_hash BINARY(64),
-    salt BINARY(64),
+    seeking_game BOOLEAN DEFAULT FALSE NOT NULL,
+    password_hash BINARY(255) NOT NULL,
+    elo INT UNSIGNED DEFAULT 1000,
     google_id CHAR(35)
 );
 SQL;
@@ -52,5 +60,3 @@ if ($conn->query($create_game_table) === true) {
 } else {
     echo "Error creating table: " . $conn->error . "\n";
 }
-
-?>
