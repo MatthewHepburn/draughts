@@ -1,8 +1,6 @@
 <?php
 namespace hepcode\draughts;
 
-require_once './config.php';
-
 class DraughtsConnection
 {
     private $connection = null;
@@ -17,6 +15,8 @@ class DraughtsConnection
 
     private function openConnection()
     {
+        require_once './Config.php';
+
         // Pull settings from config
         $cfg = \hepcode\draughts\Config::CFG;
         $host = $cfg["db"]["draughts"]["host"];

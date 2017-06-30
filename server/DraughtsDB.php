@@ -27,7 +27,8 @@ class DraughtsDB
         return $rawResult !== 0;
     }
 
-    public function createUser(string $username, string $password):bool
+
+    public function createUser(string $username, string $password)
     {
         $passwordHash = \password_hash($password, PASSWORD_DEFAULT);
         $accountCreated = date("Y-m-d H:i:s");
@@ -35,6 +36,16 @@ class DraughtsDB
             VALUES (?, ?, ?, ?)");
         $statement->bind_param("ssss", $username, $passwordHash, $accountCreated, $accountCreated);
         $statement->execute();
-        return $statement->affected_rows == 1;
+        return $statement->affected_rows !== 0;
+    }
+
+    public function getUserID(string $username)
+    {
+        $statement = $this->con->prepare("SELECT id FROM players WHERE username = ?");
+        $statement->bind_param("s", $username);
+        $statement->bind_result($result);
+        $statement->execute();
+        $statement->fetch();
+        return $result;
     }
 }

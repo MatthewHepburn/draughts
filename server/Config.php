@@ -29,6 +29,10 @@ class Config
             'maxUsernameLength' => 50,
             'minPasswordLength' => 6
         ),
+        "auth" => array(
+            "tokenKey" => "REDACTED",
+            "sessionLength" => "P2D"
+        ),
         "devMode" => true
     );
 }

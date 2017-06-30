@@ -23,7 +23,7 @@ if ($conn->connect_error) {
 $create_player_table = <<<SQL
 CREATE TABLE players (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE,
     created TIMESTAMP,
     last_seen TIMESTAMP,
     seeking_game BOOLEAN DEFAULT FALSE NOT NULL,

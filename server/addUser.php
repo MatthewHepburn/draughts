@@ -2,7 +2,7 @@
 namespace hepcode\draughts;
 
 (function () {
-    require_once "./config.php";
+    require_once "./Config.php";
     $cfg = \hepcode\draughts\Config::CFG;
 
     $errorOut = function (int $responseCode, string $publicMessage) {
@@ -55,7 +55,14 @@ namespace hepcode\draughts;
         $errorOut(500, "Database error. User creation failed.");
     }
 
+    //User created, get auth token:
+    require_once "Auth.php";
+    $userID = $db->getUserID($username);
+    $token = \hepcode\draughts\Auth::getAuthToken($userID);
+
+
     http_response_code(200);
-    echo "OK\n\n";
+    echo "OK\n";
+    echo "\"{$token}\"";
     // echo json_encode($_POST);
 })();
